@@ -60,7 +60,7 @@ class _ListItem extends StatelessWidget {
               .push(MaterialPageRoute(
             builder:(context){
               BlocProvider.of<DetailsBloc>(context).add(GetDetails(id: post.id));
-              return DetailScreenNew();
+              return DetailScreenNew(id: post.id,);
             },
           )
           );

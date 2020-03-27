@@ -6,12 +6,14 @@ abstract class DetailsState extends Equatable {
   @override
   List<Object> get props => [];
 }
+
 class DetailsStateEmpty extends DetailsState {}
 
 class DetailsStateLoading extends DetailsState {}
 
 class DetailsStateSuccess extends DetailsState {
-  final DetailsPost item;
+  final Map<int, DetailsPost> item;
+  //final DetailsPost item;
 
   DetailsStateSuccess({this.item});
 

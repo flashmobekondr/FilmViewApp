@@ -9,6 +9,27 @@ import 'package:badges/badges.dart';
 import 'package:flutter_infinite_list/details/details.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+class NavigatorPage extends StatelessWidget {
+  BuildContext tabContext;
+  final Widget child;
+  NavigatorPage({this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) {
+            tabContext = context;
+            return child;
+          }
+        );
+      },
+    );
+  }
+}
+
 
 class CatalogPage extends StatefulWidget {
   @override
@@ -17,16 +38,25 @@ class CatalogPage extends StatefulWidget {
 
 class _CatalogPageState extends State<CatalogPage> {
    int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    FavoritePage(),
-    BlocProvider<SearchBloc>(
-      create: (context) => SearchBloc(httpClient: http.Client()),
-      child: SearchForm(),
-    ),
+  final List<NavigatorPage> _widgetOptions = <NavigatorPage>[
+    NavigatorPage(child: HomePage()),
+    NavigatorPage(child: FavoritePage()),
+    NavigatorPage(
+     child: BlocProvider<SearchBloc>(
+          create: (context) => SearchBloc(httpClient: http.Client()),
+          child: SearchForm(),
+        ),
+   ),
   ];
 
   void _onItemTapped(index) {
+    if (_selectedIndex == index) {
+      if (Navigator.of(_widgetOptions[index].tabContext).canPop()) {
+        Navigator.of(_widgetOptions[index].tabContext)
+            .popUntil((Route<dynamic> r) => r.isFirst);
+      }
+      return;
+    }
     setState(() {
       _selectedIndex = index;
     });
@@ -57,6 +87,7 @@ class _CatalogPageState extends State<CatalogPage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.white,
         onTap: _onItemTapped,
+        selectedFontSize: 12.0,
       ),
     );
   }
@@ -96,22 +127,22 @@ class _HomePageState extends State<HomePage> /*with SingleTickerProviderStateMix
 //      ),
 
         actions: <Widget>[
-              IconButton(
-                    icon: Badge(
-                      child:  Icon(Icons.dehaze),
-                      badgeContent: BlocBuilder<FavoriteBloc,FavoriteState>(
-                           builder:  (context, state) {
-                            if(state is FavoriteLoaded){
-                            return Text('${state.totalAmount}');
-                    }
-                            return Container();
-                  },
-                ),
+          IconButton(
+            icon: Badge(
+              child:  Icon(Icons.dehaze),
+              badgeContent: BlocBuilder<FavoriteBloc,FavoriteState>(
+                builder:  (context, state) {
+                  if(state is FavoriteLoaded){
+                    return Text('${state.totalAmount}');
+                  }
+                  return Container();
+                },
               ),
-              onPressed: () => Navigator
-                  .of(context)
-                  .pushNamed('/favorite'),
             ),
+            onPressed: () => Navigator
+                .of(context)
+                .push(MaterialPageRoute(builder: (context)=>FavoritePage())),
+          ),
         ],
         title: Text('Posts'),
       ),
@@ -129,6 +160,7 @@ class _HomePageState extends State<HomePage> /*with SingleTickerProviderStateMix
               );
             }
             return RefreshIndicator(
+              //displacement: 0,
               onRefresh: ()=>_refreshLost(),
               child: ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
@@ -205,7 +237,7 @@ class PostWidget extends StatelessWidget {
              .push(MaterialPageRoute(
            builder:(context){
              BlocProvider.of<DetailsBloc>(context).add(GetDetails(id: post.id));
-             return DetailScreenNew();
+             return DetailScreenNew(id: post.id,);
            },
          )
          );
@@ -234,6 +266,7 @@ class PostWidget extends StatelessWidget {
                       child: Text(
                         post.body,
                         textAlign: TextAlign.justify,
+                        //softWrap: true,
                       ),
                     )
                   ],
@@ -246,36 +279,6 @@ class PostWidget extends StatelessWidget {
     ),
      );
   }
-}
-class DetailScreen extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    final int index = ModalRoute.of(context).settings.arguments;
-    return BlocBuilder<PostBloc,PostState>(
-      builder:(context,state){
-        if(state is PostLoaded){
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('${state.posts[index].title}'),
-            ),
-            body: Center(
-              child: Column(
-                children: <Widget>[
-                  Image.network(state.posts[index].posterUrl),
-                  Text('${state.posts[index].title}'),
-                  Text('${state.posts[index].body}'),
-                ],
-              ),
-            ),
-          );
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-  }
-
 }
 class _favoriteButton extends StatelessWidget {
   final Post post;

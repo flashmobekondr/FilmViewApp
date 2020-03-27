@@ -8,6 +8,7 @@ import 'package:flutter_infinite_list/details/bloc/bloc.dart';
 import 'package:flutter_infinite_list/details/models/details_post.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent,DetailsState> {
+  final Map<int, DetailsPost> mapResults = Map<int,DetailsPost>();
   @override
   DetailsState get initialState => DetailsStateEmpty();
 
@@ -17,7 +18,9 @@ class DetailsBloc extends Bloc<DetailsEvent,DetailsState> {
       yield DetailsStateLoading();
       try {
         final result = await _fetchDetails(event.id);
-        yield DetailsStateSuccess(item: result);
+        //mapResults[event.id] = result;
+        mapResults.putIfAbsent(event.id, () => result);
+        yield DetailsStateSuccess(item: mapResults);
       }
       catch(error) {
 
@@ -25,7 +28,7 @@ class DetailsBloc extends Bloc<DetailsEvent,DetailsState> {
     }
   }
   Future<DetailsPost> _fetchDetails(int id) async {
-    final String _apiKey='';
+    final String _apiKey = 'PUT KEY HERE';
     final response = await http.get('https://api.themoviedb.org/3/movie/$id?'
                                     'api_key=$_apiKey&'
                                     'language=en-US');

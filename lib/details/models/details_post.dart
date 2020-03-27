@@ -23,6 +23,6 @@ class DetailsPost extends Equatable {
   List<Object> get props => [title];
 
   @override
-  String toString() => 'DetailsPost { title: $title }';
+  String toString() => 'DetailsPost { id: $id }';
 
 }

@@ -13,5 +13,5 @@ class GetDetails extends DetailsEvent {
   List<Object> get props => [id];
 
   @override
-  String toString() => 'TextChanged: {text: $id}';
+  String toString() => 'GetDetails: {id: $id}';
 }

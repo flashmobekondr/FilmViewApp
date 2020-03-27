@@ -55,6 +55,7 @@ class __SearchBarState extends State<_SearchBar> {
           );
         },
         decoration: InputDecoration(
+          //border: InputBorder.none,
           //prefix: Icon(Icons.search),
           suffix: GestureDetector(
             child: Icon(Icons.clear),
@@ -109,7 +110,7 @@ class _SearchResult extends StatelessWidget {
                 .push(MaterialPageRoute(
               builder: (context) {
                 BlocProvider.of<DetailsBloc>(context).add(GetDetails(id: items[index].id));
-                return DetailScreenNew();
+                return DetailScreenNew(id: items[index].id,);
               },
             )
             ),

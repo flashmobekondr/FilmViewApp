@@ -72,7 +72,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       state is PostLoaded && state.hasReachedMax;
 
   Future<Tuple2<int,List<Post>>> _fetchPosts(int page) async {
-    final String _apiKey = '';
+    final String _apiKey = 'PUT KEY HERE';
     final response = await httpClient.get(
                                           'https://api.themoviedb.org/3/movie/popular?'
                                           'api_key=$_apiKey&'

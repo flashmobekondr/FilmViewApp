@@ -49,7 +49,7 @@ class SearchBloc extends Bloc<SearchEvent,SearchState> {
   }
 
   Future<List<SearchPost>> _fetchSearch(String query) async {
-    final String _apiKey = '';
+    final String _apiKey = 'PUT KEY HERE';
     final response = await httpClient.get('https://api.themoviedb.org/3/search/movie?'
                                           'api_key=$_apiKey&'
                                           'language=en-US&'

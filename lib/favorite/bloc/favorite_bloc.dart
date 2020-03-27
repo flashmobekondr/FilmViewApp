@@ -18,7 +18,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent,FavoriteState> {
     }
   }
 
-  Stream<FavoriteState> _mapLoadFavoriteToState() async*{
+  Stream<FavoriteState> _mapLoadFavoriteToState() async* {
     yield FavoriteLoading();
     try {
       await Future.delayed(Duration(seconds: 1));
