@@ -1,10 +1,8 @@
 [![build](https://github.com/felangel/bloc/workflows/build/badge.svg)](https://github.com/felangel/bloc/actions)
 
 # FilmViewApp
+<img src="https://media.giphy.com/media/f8VEzJTTDYI4T4ckrP/giphy.gif" width="238" height="480"><img src="https://media.giphy.com/media/ZdfmQfjMyNzaequkjj/giphy.gif" width="238" height="480"><img src="https://media.giphy.com/media/SRkZxmJ0PfY6WLUD5J/giphy.gif" width="238" height="480">
 
-https://gifyu.com/image/nrIF
-https://gifyu.com/image/nrIV
-https://gifyu.com/image/nrIU
 
 ## Getting Started
 
