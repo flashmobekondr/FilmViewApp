@@ -16,6 +16,8 @@ dependencies:
   badges: ^1.1.1
   transparent_image: ^1.0.0
   cached_network_image: ^2.0.0
+  data_connection_checker: ^0.3.4
+  get_it: ^4.0.2
 
 flutter:
   uses-material-design: true
