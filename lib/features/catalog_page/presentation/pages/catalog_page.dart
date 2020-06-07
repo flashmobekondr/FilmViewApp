@@ -84,7 +84,7 @@ class _CatalogPageState extends State<CatalogPage> /*with SingleTickerProviderSt
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _catalogPageBloc.add(CatalogPageRefreshEvent());
+      _catalogPageBloc.add(CatalogPageFetchEvent());
     }
   }
 }

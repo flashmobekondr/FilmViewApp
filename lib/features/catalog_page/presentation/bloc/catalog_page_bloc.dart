@@ -55,8 +55,8 @@ class CatalogPageBloc extends Bloc<CatalogPageEvent, CatalogPageState> {
         try {
           final posts = await post.fetch(1);
           //yield PostLoaded(posts: [], hasReachedMax: false);
-          yield CatalogPagePostRefreshLoading();
-          yield CatalogPagePostLoaded(posts: posts.item2, hasReachedMax: false);
+          //yield CatalogPagePostRefreshLoading();
+          yield CatalogPagePostLoaded(posts: posts.item2, hasReachedMax: false, page: 1);
         }
         catch (_) {
           yield CatalogPagePostError();

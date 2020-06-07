@@ -38,5 +38,5 @@ class CatalogPagePostLoaded extends CatalogPageState {
 
   @override
   String toString() =>
-      'PostLoaded { posts: ${posts.length}, hasReachedMax: $hasReachedMax }';
+      'CatalogPagePostLoaded { posts: ${posts.length}, hasReachedMax: $hasReachedMax }';
 }
